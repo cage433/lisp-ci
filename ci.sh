@@ -2,7 +2,7 @@
 
 while [ true ]; do
   # Weirdly, unless the command is wrapped in a $() we can't Ctrl-C the script
-  $(fswatch -1 *.lisp play/*.lisp lisp-utils/*.lisp > /dev/null 2>&1)
+  find . -name '*.lisp' | xargs fswatch -1 > /dev/null 2>&1
   tmux set -q -g status-bg black
   rlwrap sbcl --noinform --load load --eval '(ci)'
   if [[ $? == 0 ]]; then
